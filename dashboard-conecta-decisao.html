@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evolução do Conecta — Decisão do Piloto</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&display=swap');
+  :root{
+    --blue:#0225EB; --cyan:#02FFFF; --dark:#002060; --gray:#595959;
+    --ink:#0E1116; --muted:#6B7280; --line:#E5E8F0; --bg:#F4F6FC; --card:#FFFFFF;
+    --amber:#9A6B00; --amber-bg:#FFF6E3; --teal:#0F6E56; --teal-bg:#E1F5EE;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Exo 2',sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px 56px}
+  header{background:linear-gradient(105deg,var(--dark) 0%,var(--blue) 100%);color:#fff;padding:34px 44px;border-radius:0 0 20px 20px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;background:rgba(2,255,255,.10)}
+  header .brand{font-size:12px;letter-spacing:.22em;font-weight:600;text-transform:uppercase;color:var(--cyan)}
+  header h1{font-size:30px;font-weight:800;margin-top:10px;letter-spacing:-.01em}
+  header .sub{font-size:14px;margin-top:8px;color:#C7D2FE;max-width:640px}
+  .maxwrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  .stitle{display:flex;align-items:center;gap:12px;margin:38px 0 16px}
+  .stitle .num{width:30px;height:30px;border-radius:8px;background:var(--blue);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .stitle h2{font-size:19px;font-weight:700;color:var(--dark)}
+  .stitle .hint{font-size:13px;color:var(--muted);font-weight:400}
+
+  .foundation{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .f-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 16px}
+  .f-card .ic{width:34px;height:34px;border-radius:9px;background:#EEF1FE;color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:10px}
+  .f-card h3{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:5px}
+  .f-card p{font-size:12.5px;color:var(--gray);line-height:1.45}
+  .foundation-note{margin-top:12px;font-size:13px;color:var(--muted);font-style:italic}
+
+  .options{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+  .opt{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;position:relative;display:flex;flex-direction:column}
+  .opt.reco{border:2px solid var(--blue);box-shadow:0 8px 28px rgba(2,37,235,.10)}
+  .opt .badge{position:absolute;top:-12px;left:24px;background:var(--blue);color:#fff;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 13px;border-radius:20px}
+  .opt .badge.neutral{background:#EEF1FE;color:var(--blue)}
+  .opt .label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .opt h3{font-size:21px;font-weight:800;color:var(--dark);margin:4px 0 4px}
+  .opt .pilot{font-size:13.5px;color:var(--blue);font-weight:600;margin-bottom:16px}
+  .opt .row{display:flex;gap:10px;padding:11px 0;border-top:1px solid var(--line);font-size:13.5px}
+  .opt .row .k{width:74px;flex-shrink:0;color:var(--muted);font-weight:600;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;padding-top:2px}
+  .opt .row .v{color:var(--ink);line-height:1.45}
+  .opt .row.win .v{color:var(--teal);font-weight:500}
+  .opt .row.risk .v{color:#A3341F;font-weight:500}
+  .opt .foot{margin-top:auto;padding-top:16px;font-size:13px;color:var(--gray)}
+  .opt .foot b{color:var(--dark)}
+
+  .tradeoff{background:var(--amber-bg);border-left:5px solid var(--amber);border-radius:0 12px 12px 0;padding:16px 20px;margin-top:20px;font-size:14px;color:#5C4A10;line-height:1.55}
+  .tradeoff b{color:var(--amber)}
+
+  .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+  .panel h3{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:4px}
+  .panel .psub{font-size:12.5px;color:var(--muted);margin-bottom:18px}
+
+  .bar-row{margin-bottom:16px}
+  .bar-row .bl{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+  .bar-row .bl .nm{font-weight:600;color:var(--ink)}
+  .bar-row .bl .vl{color:var(--muted);font-size:12px}
+  .track{height:10px;background:#EEF1F7;border-radius:6px;overflow:hidden}
+  .fill{height:100%;border-radius:6px}
+  .tag{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:1px}
+  .tag.ref{background:var(--teal-bg);color:var(--teal)}
+  .tag.dor{background:#FBEAE4;color:#A3341F}
+
+  .wave{display:flex;gap:14px;margin-bottom:14px}
+  .wave .dot{width:12px;height:12px;border-radius:50%;margin-top:5px;flex-shrink:0}
+  .wave .wc h4{font-size:13.5px;font-weight:700;color:var(--dark)}
+  .wave .wc .wt{font-size:11.5px;color:var(--blue);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  .wave .wc p{font-size:12.5px;color:var(--gray);margin-top:2px}
+
+  .decisions{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 26px}
+  .decisions ul{list-style:none}
+  .decisions li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .decisions li:last-child{border-bottom:none}
+  .decisions li .ck{color:var(--blue);font-size:18px;flex-shrink:0}
+  .decisions li b{color:var(--dark)}
+
+  .cycle{display:flex;align-items:stretch;justify-content:center;gap:8px;flex-wrap:wrap}
+  .cy-node{flex:1;min-width:150px;border-radius:12px;padding:18px 14px;text-align:center;border:1px solid}
+  .cy-node.feed{background:var(--teal-bg);border-color:#9FE1CB}
+  .cy-node.hub{background:#EEF1FE;border-color:#B5D4F4}
+  .cy-node.give{background:#F3EEFE;border-color:#CECBF6}
+  .cy-node .cy-t{font-size:14.5px;font-weight:700}
+  .cy-node.feed .cy-t{color:var(--teal)} .cy-node.hub .cy-t{color:var(--blue)} .cy-node.give .cy-t{color:#4A3AA7}
+  .cy-node .cy-s{font-size:12px;margin-top:4px}
+  .cy-node.feed .cy-s{color:#0F6E56} .cy-node.hub .cy-s{color:#185FA5} .cy-node.give .cy-s{color:#534AB7}
+  .cy-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:52px}
+  .cy-lbl{font-size:11px;color:var(--muted)}
+  .cy-ar{font-size:22px;color:#B4B2A9;line-height:1}
+  .cy-loop{margin-top:16px;text-align:center;font-size:13px;color:var(--muted);font-style:italic}
+  .cy-loop-ar{color:var(--blue);font-style:normal;font-size:16px;margin-right:4px}
+
+  .steps{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap}
+  .step{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 12px;position:relative}
+  .step.gate{background:var(--amber-bg);border-color:#EACB8A}
+  .step.done{background:var(--teal-bg);border-color:#9FE1CB}
+  .step .s-n{width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+  .step.gate .s-n{background:var(--amber)} .step.done .s-n{background:var(--teal)}
+  .step .s-t{font-size:13.5px;font-weight:700;color:var(--dark)}
+  .step.gate .s-t{color:#7A5400} .step.done .s-t{color:var(--teal)}
+  .step .s-s{font-size:11.5px;color:var(--gray);margin-top:3px;line-height:1.4}
+  .step .s-badge{margin-top:8px;display:inline-block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#7A5400;background:#F5E3BC;padding:2px 7px;border-radius:9px}
+  .s-sep{display:flex;align-items:center;color:#C4C9D4;font-size:18px}
+
+  .ncmp{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .ncmp th,.ncmp td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  .ncmp thead th{background:#F4F6FC;font-size:12.5px;font-weight:700;color:var(--dark)}
+  .ncmp td.k{color:var(--muted);font-weight:600;font-size:12px}
+  .ncmp .reco-col{background:#F5F8FF}
+  .ncmp thead .reco-col{background:#E7EEFF;color:var(--blue)}
+  .ncmp td.win{color:var(--teal);font-weight:600}
+  .ncmp td.risk{color:#A3341F}
+  .ncmp tr:last-child td{border-bottom:none}
+  .mini-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;background:var(--blue);color:#fff;padding:2px 7px;border-radius:9px;vertical-align:1px}
+
+  footer{text-align:center;font-size:12px;color:var(--muted);margin-top:40px}
+  @media (max-width:880px){.foundation{grid-template-columns:1fr 1fr}.options{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <header>
+    <div class="maxwrap" style="padding:0">
+      <div class="brand">Fenasbac · Coordenação de TI · Programa 60 Anos</div>
+      <h1>Evolução do Conecta — Fluxo Invertido</h1>
+      <div class="sub">O Conecta deixa de ser via de mão única e vira um ciclo: as regionais alimentam a base, a Fenasbac devolve inteligência. Início por Belém, definido com a liderança do Programa 60 Anos — entre as bases de maior necessidade.</div>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <div class="stitle">
+      <div class="num">1</div>
+      <h2>A visão — fluxo invertido</h2>
+      <span class="hint">— o Conecta deixa de ser mão única e vira um ciclo</span>
+    </div>
+    <div class="panel" style="padding:28px 24px">
+      <div class="cycle">
+        <div class="cy-node feed">
+          <div class="cy-t">10 ASBACs regionais</div>
+          <div class="cy-s">Alimentam a base</div>
+        </div>
+        <div class="cy-arrow"><span class="cy-lbl">dados</span><span class="cy-ar">&#8594;</span></div>
+        <div class="cy-node hub">
+          <div class="cy-t">Fenasbac Conecta</div>
+          <div class="cy-s">Repositório federativo</div>
+        </div>
+        <div class="cy-arrow"><span class="cy-lbl">retorno</span><span class="cy-ar">&#8594;</span></div>
+        <div class="cy-node give">
+          <div class="cy-t">Análises e indicadores</div>
+          <div class="cy-s">Devolvidos às regionais</div>
+        </div>
+      </div>
+      <div class="cy-loop"><span class="cy-loop-ar">&#8630;</span> Ciclo contínuo: quanto melhor a regional mantém a base, melhores os indicadores que recebe de volta</div>
+    </div>
+
+    <div class="stitle">
+      <div class="num">2</div>
+      <h2>A base comum</h2>
+      <span class="hint">— igual nos dois caminhos · não é opinativo, é o mínimo pra ser executável</span>
+    </div>
+    <div class="foundation">
+      <div class="f-card">
+        <div class="ic">&#9873;</div>
+        <h3>Aval executivo</h3>
+        <p>Dono formal e prazo acordado antes de a TI iniciar. Dependência política, não técnica.</p>
+      </div>
+      <div class="f-card">
+        <div class="ic">&#128274;</div>
+        <h3>Proteção de dados</h3>
+        <p>Papéis LGPD e segregação de acesso testável resolvidos na arquitetura, antes do piloto.</p>
+      </div>
+      <div class="f-card">
+        <div class="ic">&#9678;</div>
+        <h3>Critério de sucesso</h3>
+        <p>Mede a melhoria da base (de onde parte até onde chega), não o patamar absoluto. É o que autoriza a próxima onda.</p>
+      </div>
+      <div class="f-card">
+        <div class="ic">&#9634;</div>
+        <h3>Escopo enxuto</h3>
+        <p>Só a Fase 1 (painel de qualidade). Clube F fica como visão de futuro, fora do piloto.</p>
+      </div>
+    </div>
+
+    <div class="stitle">
+      <div class="num">3</div>
+      <h2>As bases de maior necessidade</h2>
+      <span class="hint">— o foco do piloto · início por Belém, BH e Fortaleza na sequência</span>
+    </div>
+    <p style="font-size:13.5px;color:var(--gray);margin:-4px 0 16px;max-width:760px">O piloto foca nas regionais que mais precisam de apoio — as três com maior lacuna de dados. A definição de iniciar por Belém foi construída com a liderança do Programa 60 Anos, a partir do diagnóstico técnico das bases; Belo Horizonte e Fortaleza vêm na sequência, no mesmo modelo de evolução assistida.</p>
+    <div class="need-cmp">
+      <table class="ncmp">
+        <thead>
+          <tr><th></th><th class="reco-col">Belém &nbsp;<span class="mini-badge">início</span></th><th>Belo Horizonte</th><th>Fortaleza</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="k">E-mail (canal de contato)</td><td class="reco-col">81%</td><td>90,6%</td><td>23,9%</td></tr>
+          <tr><td class="k">Celular</td><td class="reco-col">92,1%</td><td>n/d</td><td>parcial</td></tr>
+          <tr><td class="k">CPF</td><td class="reco-col">0%</td><td>0%</td><td>0%</td></tr>
+          <tr><td class="k">Colaboração da regional</td><td class="reco-col win">Alta — corrige rápido</td><td>Tardia</td><td class="risk">Sem retorno à devolutiva</td></tr>
+          <tr><td class="k">Porte / apelo</td><td class="reco-col">Menor da rede · máximo apelo de inclusão</td><td>Base mínima (4 campos)</td><td>Matrícula como única chave</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tradeoff">
+      <b>Por que Belém primeiro:</b> as três partem de CPF 0%, mas Belém combina os melhores canais de contato (e-mail 81% + celular 92%) com a maior colaboração da regional — e o maior apelo, por ser a menor e a que historicamente menos recebe. Como a base parte de CPF 0%, o piloto não é uma vitrine de "está pronto": é uma <b>evolução assistida</b> — a Fenasbac ajuda a estruturar a base, e o sucesso é medido pela melhoria, não pelo patamar de partida.
+    </div>
+
+    <div class="stitle">
+      <div class="num">4</div>
+      <h2>O ponto de partida de Belém</h2>
+      <span class="hint">— dados reais do diagnóstico · é daqui que a evolução parte</span>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h3>A base de Belém hoje</h3>
+        <div class="psub">Tem canal de contato, faltam dados de identificação</div>
+        <div class="bar-row">
+          <div class="bl"><span class="nm">Categoria</span><span class="vl">100%</span></div>
+          <div class="track"><div class="fill" style="width:100%;background:var(--teal)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bl"><span class="nm">Celular</span><span class="vl">92,1%</span></div>
+          <div class="track"><div class="fill" style="width:92%;background:var(--teal)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bl"><span class="nm">E-mail</span><span class="vl">81%</span></div>
+          <div class="track"><div class="fill" style="width:81%;background:var(--blue)"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bl"><span class="nm">CPF <span class="tag dor">lacuna</span></span><span class="vl">0%</span></div>
+          <div class="track"><div class="fill" style="width:2%;background:#D85A30"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bl"><span class="nm">Data de nascimento <span class="tag dor">lacuna</span></span><span class="vl">ausente</span></div>
+          <div class="track"><div class="fill" style="width:2%;background:#D85A30"></div></div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:14px;line-height:1.5">Belém tem como comunicar (e-mail 81%, celular 92%) mas não tem identificação fiscal. O piloto assistido fecha exatamente essa lacuna — e a melhoria vira o resultado.</p>
+      </div>
+      <div class="panel">
+        <h3>Rollout em ondas</h3>
+        <div class="psub">Cada onda só começa após a anterior validar o modelo</div>
+        <div class="wave">
+          <div class="dot" style="background:#D85A30"></div>
+          <div class="wc"><div class="wt">Onda 1 · jul–set/2026</div><h4>Piloto — Belém</h4><p>Evolução assistida da base, com apoio da Fenasbac.</p></div>
+        </div>
+        <div class="wave">
+          <div class="dot" style="background:var(--blue)"></div>
+          <div class="wc"><div class="wt">Onda 2 · out–dez/2026</div><h4>Expansão</h4><p>Bases médias já consolidadas.</p></div>
+        </div>
+        <div class="wave">
+          <div class="dot" style="background:var(--teal)"></div>
+          <div class="wc"><div class="wt">Onda 3 · 2027</div><h4>Consolidação</h4><p>Rede inteira no ciclo contínuo.</p></div>
+        </div>
+      </div>
+    </div>
+        </div>
+        <div class="wave">
+          <div class="dot" style="background:var(--teal)"></div>
+          <div class="wc"><div class="wt">Onda 3 · 2027</div><h4>Consolidação</h4><p>Rede inteira no ciclo contínuo.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stitle">
+      <div class="num">5</div>
+      <h2>Como cada regional entra</h2>
+      <span class="hint">— a sequência de pré-requisitos · nenhuma regional entra sem passar por ela</span>
+    </div>
+    <div class="steps">
+      <div class="step gate">
+        <div class="s-n">1</div>
+        <div class="s-t">Aval executivo</div>
+        <div class="s-s">Paulo alinha com as regionais</div>
+        <div class="s-badge">portão de entrada</div>
+      </div>
+      <div class="s-sep">&#8594;</div>
+      <div class="step">
+        <div class="s-n">2</div>
+        <div class="s-t">Ponto focal</div>
+        <div class="s-s">Cada ASBAC define o responsável</div>
+      </div>
+      <div class="s-sep">&#8594;</div>
+      <div class="step">
+        <div class="s-n">3</div>
+        <div class="s-t">Permissões</div>
+        <div class="s-s">O que cada regional vê e altera</div>
+      </div>
+      <div class="s-sep">&#8594;</div>
+      <div class="step">
+        <div class="s-n">4</div>
+        <div class="s-t">Capacitação</div>
+        <div class="s-s">Treinamento do ponto focal</div>
+      </div>
+      <div class="s-sep">&#8594;</div>
+      <div class="step done">
+        <div class="s-n">5</div>
+        <div class="s-t">Regional ativa</div>
+        <div class="s-s">Alimenta e recebe indicadores</div>
+      </div>
+    </div>
+
+    <div class="stitle">
+      <div class="num">6</div>
+      <h2>Próximos passos — a definir com a presidência</h2>
+    </div>
+    <div class="decisions">
+      <ul>
+        <li><span class="ck">&#9679;</span><div><b>Confirmar o início por Belém</b> e a sequência (Belo Horizonte, Fortaleza) no modelo de evolução assistida.</div></li>
+        <li><span class="ck">&#9679;</span><div><b>Aval executivo com a regional</b> — quem conduz a ponte e em que prazo (portão de entrada do piloto).</div></li>
+        <li><span class="ck">&#9679;</span><div><b>Meta de melhoria da base</b> de Belém (ex.: CPF de 0% para patamar acordado) e o apoio da Fenasbac à complementação.</div></li>
+        <li><span class="ck">&#9679;</span><div><b>Arquitetura de proteção de dados</b> e papéis LGPD antes do início.</div></li>
+        <li><span class="ck">&#9679;</span><div><b>Tratamento de frequentadores</b> no Clube F (não sócios efetivos).</div></li>
+      </ul>
+    </div>
+
+    <footer>Fenasbac · Coordenação de TI · Proposta para alinhamento com a presidência · Programa 60 Anos</footer>
+  </div>
+</body>
+</html>
